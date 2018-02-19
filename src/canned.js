@@ -1,7 +1,6 @@
-import CANNED_SONGS from './canned-data.js';
+import CANNED_SONGS from "./canned-data.js";
 
-// 25 = buddy holly, 27 = callmemaybe
-var LANDING_CANNED = CANNED_SONGS[27]; 
+var LANDING_CANNED = CANNED_SONGS[0];
 
 class Canned {
   constructor(o) {
@@ -27,9 +26,8 @@ class Canned {
 
   static comparator(cana, canb) {
     let textcmp = (t1, t2) => {
-        return t1 === t2 ? 0
-            : (t1 < t2 ? -1 : 1);
-    }
+      return t1 === t2 ? 0 : t1 < t2 ? -1 : 1;
+    };
     if (cana.artist && !canb.artist) {
       return 1;
     } else if (canb.artist && !cana.artist) {
@@ -41,9 +39,8 @@ class Canned {
     if (cana.artist === canb.artist) {
       return textcmp(cana.title, canb.title);
     }
-    return textcmp(cana.artist, canb.artist)
+    return textcmp(cana.artist, canb.artist);
   }
-
 }
 
 var CANNED = [];
@@ -58,14 +55,13 @@ for (let c of CANNED_SONGS) {
   GROUPED_CANS.get(can.group).push(can);
 }
 // sort values
-let cmp = (a,b) => {
+let cmp = (a, b) => {
   var keya = a.artist || a.title;
   var keyb = b.artist || b.title;
-  return keya < keyb ? -1 : 
-    (keyb < keya ? 1 : 0)
+  return keya < keyb ? -1 : keyb < keya ? 1 : 0;
 };
 for (let [k, cans] of GROUPED_CANS) {
   GROUPED_CANS.set(k, cans.sort(cmp));
 }
-  
+
 export { Canned, GROUPED_CANS, LANDING_CANNED };
